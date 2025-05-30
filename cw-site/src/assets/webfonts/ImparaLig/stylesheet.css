@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'ImparaLig';
+  src: url('ImparaLig-webfont.eot');
+  src: url('ImparaLig-webfont.eot?#iefix') format('embedded-opentype'),
+    url('ImparaLig-webfont.woff') format('woff'),
+    url('ImparaLig-webfont.ttf') format('truetype'),
+    url('ImparaLig-webfont.svg') format('svg');
+}

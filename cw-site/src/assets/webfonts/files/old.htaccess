@@ -1,0 +1,12 @@
+Options +Indexes
+DirectoryIndex index.html index.htm
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !^completewellnesswny.com$ [NC]
+RewriteRule ^(.*)$ http://completewellnesswny.com/$1 [L,R=301]
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html
+# Replace html with your file extension, eg: php, htm, asp

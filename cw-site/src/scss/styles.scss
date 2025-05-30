@@ -36,7 +36,42 @@ $offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
 $body-color: #333;
 $body-bg: #fff;
 $border-radius: 0.4rem;
-$success: #7952b3;
+// Customize some defaults
+$body-color: #333;
+$body-bg: #fff;
+$border-radius: 0.4rem;
+
+// scss-docs-start color-variables
+$blue: #1c256b;
+$indigo: #01397d;
+$purple: #561fad;
+$pink: #ff325e;
+$red: #db063b;
+$orange: #f58f1b;
+$yellow: #fcba03;
+$green: #008343;
+$teal: #215a6b;
+$cyan: #0cd1d8;
+// scss-docs-end color-variables
+
+// scss-docs-start theme-color-variables
+$info: $teal;
+// scss-docs-end theme-color-variables
+
+// Style anchor elements.
+$link-color: $green;
+$link-shade-percentage: 50%;
+
+// Style p element.
+$paragraph-margin-bottom: 1.25rem;
+$font-family-sans-serif: ImparaReg, system-ui, -apple-system, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+$headings-font-family: ImparaMed, "Lato", system-ui, -apple-system, "Segoe UI",
+  Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$headings-font-weight: normal;
 
 // Required
 @import "bootstrap/scss/variables";
@@ -88,6 +123,7 @@ $success: #7952b3;
 //
 
 @import "icon-list";
+@import "cw-styles";
 
 body {
   padding: 1.5rem;

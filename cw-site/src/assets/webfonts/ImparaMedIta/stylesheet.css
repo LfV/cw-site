@@ -1,0 +1,8 @@
+@font-face {
+	font-family: 'ImparaMedIta';
+	src: url('ImparaMedIta-webfont.eot');
+	src: url('ImparaMedIta-webfont.eot?#iefix') format('embedded-opentype'),
+		url('ImparaMedIta-webfont.woff') format('woff'),
+		url('ImparaMedIta-webfont.ttf') format('truetype'),
+		url('ImparaMedIta-webfont.svg') format('svg');
+}

@@ -1,10 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <base target="_top" />
+    <!-- Google Tag Manager -->
+    <!-- End Google Tag Manager -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Complete Wellness</title>
+    <meta
+      name="description"
+      content="Venue Rental at Complete Wellness Arts and Science Center in Western New York."
+    />
+    <meta
+      name="keywords"
+      content="Venue Rental, Venue Rental Agreement, Venue Rental Terms and Conditions, Hall, Hall Rental, Event Room, Kitchen"
+    />
+    <meta name="author" content="Complete Wellness" />
+    <title>
+      Private Party Venue Rental at Complete Wellness Arts &amp; Science Center
+    </title>
     <link rel="stylesheet" href="scss/styles.scss" />
+    <script
+      src="https://kit.fontawesome.com/acbc4fb3ad.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="shortcut icon" href="img/favicon.png" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.8/index.global.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var calendarEl = document.getElementById("calendar");
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          themeSystem: "bootstrap5",
+          height: "auto",
+          headerToolbar: {
+            start: "prev,next",
+            center: "title",
+            end: "today",
+          },
+          selectable: true,
+          selectMirror: true,
+          displayEventTime: false, // don't show the time column in list view
+          longPressDelay: 100,
+          eventDisplay: "block",
+          firstDay: 1,
+          //fixedWeekCount: false,
+          validRange: function (nowDate) {
+            return {
+              start: nowDate,
+              //				end: nowDate.clone().add(1, 'months')
+            };
+          },
+          businessHours: [
+            // specify an array instead
+            {
+              daysOfWeek: [5], // Friday
+              startTime: "0:00", // 12am
+              endTime: "24:00", // 12pm
+            },
+            {
+              daysOfWeek: [6], // Saturday
+              startTime: "0:00", // 12am
+              endTime: "24:00", // 12pm
+            },
+            {
+              daysOfWeek: [0], // Sunday
+              startTime: "0:00", // 12am
+              endTime: "24:00", // 12pm
+            },
+          ],
+          selectConstraint: "businessHours",
+          //selectOverlap: false,
+          //selectOverlap: function(event) {
+          //  return event.rendering === 'background';
+          //},
+
+          // http://fullcalendar.io/docs/google_calendar/
+          googleCalendarApiKey: "AIzaSyD50Wa6IbXr3bk2Iv9sMCcQ_75hLM-QV-g",
+
+          eventSources: [
+            //{
+            //  googleCalendarId: 'healthessentialshbot.com_uedaofhml2jh9to2h7hftds7e8@group.calendar.google.com', //Public Events
+            //  color: '#4d7b89',
+            //},
+            {
+              googleCalendarId:
+                "healthessentialshbot.com_amfr5gi1copgb7qbh9el06c0uo@group.calendar.google.com", //Reserved
+              color: "#d40030",
+              groupId: "Reserved",
+              blocked: "true",
+              eventClassNames: "blocked",
+              eventDataTransform: function (eventData) {
+                eventData.title = "Reserved";
+              },
+            },
+            {
+              googleCalendarId:
+                "healthessentialshbot.com_a4hhh0r0e7eaqb2e9ev59fu9d0@group.calendar.google.com", //PENDING
+              color: "#fcba03",
+              textColor: "#fff",
+              groupId: "Pending",
+              eventDataTransform: function (eventData) {
+                eventData.title = "Pending";
+              },
+            },
+            {
+              googleCalendarId:
+                "c_87hfg4jiv6gdabvlqossqe65ts@group.calendar.google.com", //Waitlist
+              color: "#009b6e",
+              className: "cal-private",
+              id: "cal-private",
+              eventDataTransform: function (eventData) {
+                eventData.title = "Waitlisted";
+              },
+            },
+            //{
+            //  googleCalendarId: 'healthessentialshbot.com_6out8m6h2lndmu8falnbleeatk@group.calendar.google.com', //Kitchen Classroom
+            //  color: '#203d79',
+            //},
+            {
+              googleCalendarId: "en.usa#holiday@group.v.calendar.google.com", //Holidays
+              color: "#7a9ca6",
+              textColor: "white",
+              eventOverlap: "true",
+              //display: 'background',
+            },
+          ],
+
+          eventClick: function (info) {
+            info.jsEvent.preventDefault(); // don't let the browser navigate
+          },
+
+          select: function (arg) {
+            $("#fullCalModal").modal("show");
+            $(function () {
+              // Format the date in MM/dd/yyyy format
+              var formattedDate = FullCalendar.formatDate(arg.start, {
+                month: "2-digit",
+                day: "2-digit",
+                year: "numeric",
+              });
+
+              // Log the date value just before sending it to the script
+              console.log(
+                "Date value being sent from HTML form:",
+                formattedDate
+              );
+
+              // Set the value of the input field with class "textBoxEventDate"
+              $(".textBoxEventDate input").val(formattedDate);
+            });
+
+            $("#dateHelp").html(
+              "If you have selected a Reserved, Pending, or date more than three months in the future you will be added to the waitlist if you submit this request. We will contact the 1st party on the waitlist when the date opens up."
+            );
+
+            //        $(function( events ){
+            //          if (arg.date (info.event.eventClassNames == 'blocked')) {
+            //          $('#dateHelp').html('You have selected a Reserved date and will be added to the waitlist.');
+            //          }
+            //        });
+          },
+        });
+
+        calendar.render();
+      });
+    </script>
     <script type="module" src="./js/main.js"></script>
   </head>
   <body>
@@ -12,20 +172,504 @@
       <header
         class="d-flex justify-content-between align-items-md-center pb-3 mb-5 border-bottom"
       >
-        <h1 class="h4">
-          <a
-            href="/"
-            class="d-flex align-items-center text-dark text-decoration-none"
-          >
-            <span>CW</span>
-          </a>
-        </h1>
-        <a
-          href="https://completewellnesswny.com/"
-          target="_blank"
-          rel="noopener"
-          >Complete Wellness</a
+        <!-- nav -->
+        <nav
+          class="navbar navbar-expand-lg navbar-light fixed-top sticky mb-5"
+          id="navbar"
         >
+          <div class="container-fluid mx-xxl-4">
+            <a class="navbar-brand" href="http://completewellnesswny.com/"
+              ><img src="assets/img/cw-logo.svg" alt="" height="75"
+            /></a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarCollapse"
+              aria-controls="navbarCollapse"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul
+                class="navbar-nav navbar-nav-scroll text-center ms-auto mb-2 mb-lg-0"
+              >
+                <li class="nav-item px-3">
+                  <a
+                    class="nav-link"
+                    aria-current="page"
+                    href="http://completewellnesswny.com"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item px-3 dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarScrollingDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    >About</a
+                  >
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="navbarScrollingDropdown"
+                  >
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://completewellnesswny.com/about"
+                        >Complete Wellness Arts &amp; Science Center</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://completewellnesswny.com/venue-rental"
+                        >Private Event Venue Rental</a
+                      >
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://ladygardenllc.as.me/"
+                        target="_blank"
+                        >Ashley Johnson, Licensed and Certified Full Body Waxing
+                        Specialist</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://completewellnessavatar.com/"
+                        target="_blank"
+                        >The Avatar Course</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.sweetcheekscakebar.com/"
+                        target="_blank"
+                        >Bianca Morales, Cake Decorating Instructor</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://brilliantlightwny.com/"
+                        target="_blank"
+                        >Brilliant Light Therapy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://www.familycarept.com/"
+                        target="_blank"
+                        >Family Care Physical Therapy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://hehbot.com/"
+                        target="_blank"
+                        >Health Essentials Hyperbaric Oxygen Therapy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.styleseat.com/m/v/jasongrey"
+                        target="_blank"
+                        >Jason M. Grey,
+                        <br />
+                        Certified Master Pedicurist, Certified Podologist</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://ladygardenllc.as.me/"
+                        target="_blank"
+                        >Lady Garden Full Body Waxing</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://mirrormirror12.as.me/schedule.php"
+                        target="_blank"
+                        >Niya Rose, Stylist</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://painrehabofwny.com/"
+                        target="_blank"
+                        >Pain Rehab of WNY</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://thepixieshoppe.com/"
+                        target="_blank"
+                        >The Pixie Shoppe</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://painrehabofwny.com/"
+                        target="_blank"
+                        >Dr. Pratibha Bansal, MD</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://mirrormirror12.as.me/schedule.php"
+                        target="_blank"
+                        >Pristine'd Styles</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://relationshipdecoder.weebly.com/"
+                        target="_blank"
+                        >RD Anderson, Author, Speaker, Marriage and Family
+                        Therapist</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://relationshipdecoder.weebly.com/"
+                        target="_blank"
+                        >The Relationship Decoder</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://www.familycarept.com/"
+                        target="_blank"
+                        >Sammy Iraci III, PT
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://thepixieshoppe.com/"
+                        target="_blank"
+                        >Saundra Chandler, Master Cosmetologist and Educator</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.massagebook.com/Buffalo_NY~Massage~nicole-mcevoy-lmt"
+                        target="_blank"
+                        >Seven Palms Healing</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.styleseat.com/m/v/jasongrey"
+                        target="_blank"
+                        >Sole Sanctuary Medical Nail Services</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.sweetcheekscakebar.com/"
+                        target="_blank"
+                        >Sweet Cheeks Cake Bar</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://terrisongbird.com/"
+                        target="_blank"
+                        >Terri Songbird Phillips, RN CNHP</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown px-3">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarScrollingDropdown2"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    >Services</a
+                  >
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="navbarScrollingDropdown2"
+                  >
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://completewellnesswny.com/hbot"
+                        >Hyperbaric Oxygen Therapy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://wellbeinghypnosis.com/"
+                        target="_blank"
+                        >Hypnosis</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://terrisongbird.com/"
+                        target="_blank"
+                        >Iridology</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://www.brilliantlightwny.com/"
+                        target="_blank"
+                        >Infrared Light Therapy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.massagebook.com/Buffalo_NY~Massage~nicole-mcevoy-lmt"
+                        target="_blank"
+                        >Massage Therapy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.styleseat.com/m/v/jasongrey"
+                        target="_blank"
+                        >Medical Nail Services</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://terrisongbird.com/"
+                        target="_blank"
+                        >Neuro Emotional Technique</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://painrehabofwny.com/"
+                        target="_blank"
+                        >Pain Management</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://www.familycarept.com/"
+                        target="_blank"
+                        >Physical Therapy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.massagebook.com/Buffalo_NY~Massage~nicole-mcevoy-lmt"
+                        target="_blank"
+                        >Reflexology</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.massagebook.com/Buffalo_NY~Massage~nicole-mcevoy-lmt"
+                        target="_blank"
+                        >Reiki</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://relationshipdecoder.weebly.com/"
+                        target="_blank"
+                        >Relationship Coaching</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://thepixieshoppe.com/"
+                        target="_blank"
+                        >Salon Services: Haircuts, Quick Weaves, Hair &amp;
+                        Scalp Treatments</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.massagebook.com/Buffalo_NY~Massage~nicole-mcevoy-lmt"
+                        target="_blank"
+                        >Salt Cave</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://terrisongbird.com/"
+                        target="_blank"
+                        >Smoking Cessation with Laser Therapy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://terrisongbird.com/"
+                        target="_blank"
+                        >Soul Coaching</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.sweetcheekscakebar.com/"
+                        target="_blank"
+                        >Sweet Cheeks Cake Bar</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://thepixieshoppe.com/"
+                        target="_blank"
+                        >Traction Alopecia</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://ecnhp.com/"
+                        target="_blank"
+                        >Tree Essences for Emotional Wellbeing</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://ladygardenllc.as.me/"
+                        target="_blank"
+                        >Full Body Waxing</a
+                      >
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li class="dropdown-header">Private Cooking Classes</li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://jerksauce.com/"
+                        target="_blank"
+                        >Chef Krista Van Wagner</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://www.northdrivecookingschool.com/"
+                        target="_blank"
+                        >Chef MaryRuth Rera</a
+                      >
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li class="dropdown-header">Facililty Rental</li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://completewellnesswny.com/venue-rental"
+                        >Private Event Venue Rental</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://completewellnesswny.com/about#classroom"
+                        >Multi Use Event Rooms</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://completewellnesswny.com/about#kitchen"
+                        >Cooking Classroom</a
+                      >
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="http://completewellnesswny.com/about#lease"
+                        >Lease Office and Suite Space</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item px-3">
+                  <a
+                    class="nav-link"
+                    href="http://completewellnesswny.com/classes-events"
+                    >Classes &&nbsp;Events</a
+                  >
+                </li>
+                <li class="nav-item px-3">
+                  <a
+                    class="nav-link"
+                    href="http://completewellnesswny.com/venue-rental"
+                    >Venue Rental</a
+                  >
+                </li>
+                <li class="nav-item px-3">
+                  <a
+                    class="nav-link"
+                    href="http://completewellnesswny.com/contact-us"
+                    >Contact</a
+                  >
+                </li>
+                <li class="nav-item px-3 d-grid d-lg-block">
+                  <button
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#signUp"
+                    class="btn btn-primary mt-3 mt-lg-0"
+                  >
+                    <i class="fa fa-envelope fa-lg me-2" aria-hidden="true"></i
+                    >Subscribe
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <!--/.nav-collapse -->
+          </div>
+        </nav>
+        <!-- /nav -->
       </header>
 
       <h1>this is h1</h1>
@@ -50,5 +694,900 @@
 
       <p class="text-muted">Created by LV.</p>
     </div>
+    <!-- Page Title -->
+  <div class="page-title">
+    <div class="container-fluid">
+      <div class="row">
+        <h1 class="page-title-text">Private Event Venue Rental</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Content -->
+  <section class="container-fluid g-0">
+    <div class="row g-0 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+      <a href="http://completewellnesswny.com/img/eventroom-kitchen.jpg?image=251" data-toggle="lightbox"
+        data-caption="Multi Use Full Event Room" data-footer="Full Event Room open into Cooking Classroom"
+        data-gallery="example-gallery" class="col">
+        <div class="hovereffect">
+          <img src="http://completewellnesswny.com/img/eventroom-kitchen.jpg?image=251" class="img-fluid">
+          <div class="overlay">
+            <h4><i class="bi bi-search d-none d-sm-block"></i>Full Event Room open into Cooking Classroom</h4>
+          </div>
+        </div>
+      </a>
+      <a href="http://completewellnesswny.com/img/eventroom-bar18.jpg?image=252" data-toggle="lightbox"
+        data-caption="Multi Use Event Room Bar" data-footer="Event Room Bar" data-gallery="example-gallery" class="col">
+        <div class="hovereffect">
+          <img src="http://completewellnesswny.com/img/eventroom-bar18.jpg?image=252" class="img-fluid">
+          <div class="overlay">
+            <h4><i class="bi bi-search d-none d-sm-block"></i>Event Room Bar</h4>
+          </div>
+        </div>
+      </a>
+      <a href="http://completewellnesswny.com/img/kitchen2018.jpg?image=253" data-toggle="lightbox"
+        data-caption="Cooking Classroom" data-footer="Cooking Classroom" data-gallery="example-gallery" class="col">
+        <div class="hovereffect">
+          <img src="http://completewellnesswny.com/img/kitchen2018.jpg?image=253" class="img-fluid">
+          <div class="overlay">
+            <h4><i class="bi bi-search d-none d-sm-block"></i>Cooking Classroom</h4>
+          </div>
+        </div>
+      </a>
+      <a href="http://completewellnesswny.com/img/venue-sample5.png?image=258" data-toggle="lightbox"
+        data-caption="Venue Setup Sample 1" data-footer="Sample Setup, Decorations Not Included"
+        data-gallery="example-gallery" class="col">
+        <div class="hovereffect">
+          <img src="http://completewellnesswny.com/img/venue-sample5.png?image=258" class="img-fluid">
+          <div class="overlay">
+            <h4><i class="bi bi-search d-none d-sm-block"></i>Sample Setup, Decorations Not Included</h4>
+          </div>
+        </div>
+      </a>
+      <a href="http://completewellnesswny.com/img/venue-sample4.png?image=257" data-toggle="lightbox"
+        data-caption="Venue Setup Sample 2" data-footer="Sample Setup, Decorations Not Included"
+        data-gallery="example-gallery" class="col">
+        <div class="hovereffect">
+          <img src="http://completewellnesswny.com/img/venue-sample4.png?image=257" class="img-fluid">
+          <div class="overlay">
+            <h4><i class="bi bi-search d-none d-sm-block"></i>Sample Setup, Decorations Not Included</h4>
+          </div>
+        </div>
+      </a>
+      <a href="http://completewellnesswny.com/img/venue-sample2.png?image=255" data-toggle="lightbox"
+        data-caption="Venue Setup Sample 3" data-footer="Sample Setup, Decorations Not Included"
+        data-gallery="example-gallery" class="col">
+        <div class="hovereffect">
+          <img src="http://completewellnesswny.com/img/venue-sample2.png?image=255" class="img-fluid">
+          <div class="overlay">
+            <h4><i class="bi bi-search d-none d-sm-block"></i>Sample Setup, Decorations Not Included</h4>
+          </div>
+        </div>
+      </a>
+      <a href="http://completewellnesswny.com/img/venue-sample.png?image=254" data-toggle="lightbox"
+        data-caption="Venue Setup Sample 4" data-footer="Sample Setup, Decorations Not Included"
+        data-gallery="example-gallery" class="col">
+        <div class="hovereffect">
+          <img src="http://completewellnesswny.com/img/venue-sample.png?image=254" class="img-fluid">
+          <div class="overlay">
+            <h4><i class="bi bi-search d-none d-sm-block"></i>Sample Setup, Decorations Not Included</h4>
+          </div>
+        </div>
+      </a>
+      <a href="http://completewellnesswny.com/img/venue-sample3.png?image=256" data-toggle="lightbox"
+        data-caption="Venue Setup Sample 5" data-footer="Sample Setup, Decorations Not Included"
+        data-gallery="example-gallery" class="col">
+        <div class="hovereffect">
+          <img src="http://completewellnesswny.com/img/venue-sample3.png?image=256" class="img-fluid">
+          <div class="overlay">
+            <h4><i class="bi bi-search d-none d-sm-block"></i>Sample Setup, Decorations Not Included</h4>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+  <section class="my-5 px-md-5 py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="display mb-5">Venue Rental Details</h1>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-lg-7">
+          <img class="img-fluid" src="assets/img/venue-floorplan.png" alt="Venue Floorplan">
+        </div>
+        <div class="col-lg-5 mt-5 mt-lg-0">
+          <p class="lead">A Private Event Venue Rental includes use of our Cooking Classroom and adjoining Event Rooms for a 6 hour timeframe including setup and breakdown on Fridays, Saturdays, and Sundays.</p>
+          <p class="lead">$350 Friday Rentals are from 4:00pm to 10:00 only.<br>
+            $400 Saturday Rentals offer a Check-in Time choice between 1:00pm and 4:00pm.<br>
+            $375 Sunday Rentals offer a Check-in Time choice between 10:00am and 12:00pm.</p>
+          <p class="mt-4">Venue Tours and Payments available by appointment only. <br>
+            Questions? Email <a href="mailto:info@CompleteWellnessWNY.com">info@CompleteWellnessWNY.com</a></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <ul>
+            <li class="text-danger fw-bold">Events open to the public are prohibited.</li>
+            <li class="text-danger fw-bold">Events charging admission are prohibited.</li>
+            <li class="text-danger fw-bold">Events for attendees under age 23 are prohibited.</li>
+            <li class="text-danger fw-bold">48 Person Maximum Capacity, no exceptions.</li>
+            <li class="text-danger fw-bold">The latest Check-out Time is 10:00pm, no exceptions.</li>
+            <li>The Renter must be at least 23 years old and is required to show ID at Check-in. The Renter must remain
+              onsite for the duration of the rental and is responsible for the actions of all attendees.</li>
+            <li>Rental includes use of the Cooking Classroom, one refrigerator, and adjoining Event Rooms. <strong>Other
+                appliances and utensils are not included.</strong></li>
+            <li>Cooking Classroom seats 20 at five 3’6” tall 3’ x 3’ Square Tables. Event Rooms seats 48 at eight
+              Banquet Tables covered with Black Tablecloths.</li>
+            <li>Setup and breakdown time must fall within the six hour rental time period.</li>
+            <li>Additional time may only be purchased in advance in half hour increments for Saturday Rentals at a rate
+              of $40 per hour. The total rental time must fall within the 1:00pm to 10:00pm range.</li>
+            <li>The Renter will be charged an Overage Fee of $20 per 15 minute increment if not Checked In or Out within
+              15 minutes of the scheduled Check-in and Check-out Times. This fee will be deducted from the Security
+              Deposit.</li>
+            <li>The Security Deposit will be forfeit if the Premises is not completely vacated an hour after the
+              scheduled Check-out Time.</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <ul>
+            <li><strong>A $150 Refundable Security Deposit</strong> is required for a reservation. An electronic
+              Security Deposit Invoice will be emailed to the Renter when a reservation request is approved. The
+              Security Deposit Invoice must be paid online within seven days with a credit or debit card, ACH bank
+              transfer, or Cash App or the reservation will be canceled. A refund of the Security Deposit back to the
+              original payment method will be initiated within six business days after the Rental if no issues occurred.
+              Any damages, excessive cleaning, time overages, and/or Rental Agreement violation fees will be deducted
+              from the Security Deposit Refund.</li>
+            <li>The Rental Fee and Signed Rental Agreement are both due 6 weeks before the Rental Date or by the next
+              business day if the Due Date falls on a weekend or holiday. The Refundable Security Deposit is separate
+              from the the Rental Fee and is not applied to the Rental Fee balance.</li>
+            <li><strong>Cancellation:</strong> The Renter must cancel their reservation by emailing <a
+                href="mailto:info@CompleteWellnessWNY.com">info@CompleteWellnessWNY.com</a> before the Rental Fee Due
+              Date to receive a refund of all sums paid. If the reservation is canceled on or after the Rental Fee Due
+              Date the Renter shall receive a refund of the Security Deposit, however, the Rental Fee, if paid, will not
+              be eligible for a refund. If the Rental Fee has not been paid by the Rental Fee Due Date the Security
+              Deposit will not be eligible for a refund.</li>
+            <li>Read the <a href="#agreement">Rental Agreement</a> below for complete terms and conditions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="my-5 px-md-5 py-5 bg-light">
+    <div class="container-xxl bg-white border border-light rounded my-5 px-md-4 py-4 shadow">
+      <div class="row mb-5 gx-5">
+        <div class="col-12 text-center">
+          <h1 class="display mb-5">Reservations</h1>
+        </div>
+        <div class="col-lg-3">
+          <h2 class="evnt">Reservation Request</h2>
+          <p class="lead">Select an open Friday, Saturday, or Sunday to fill out and submit a Reservation Request.</p>
+          <p>The Venue is not available for Private Party Rentals Monday through Thursday. If you select a <strong class="text-danger">Reserved</strong>, <strong class="text-warning">Pending</strong>, or date more than three months in the future you will be added to a waitlist.</p>
+        </div>
+        <div class="col-lg-9 mt-5 mt-lg-0">
+          <div id="calendar" class="mb-5"> </div>
+          <div id="fullCalModal" class="modal fade" tabindex="-1" aria-labelledby="fullCalModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="fullCalModalLabel">Reservation Request</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="fullCalModalBody" class="modal-body">
+                  <form id="contact-form" class="needs-validation" role="form" novalidate>
+                    <div class="row">
+                      <div class="col-md mb-3">
+                        <div class="form-floating">
+                          <input id="fname" type="text" name="firstname" class="form-control form-control-lg"
+                            placeholder="Renter's First Name" required>
+                          <label for="fname" class="form-label">Renter's First Name*</label>
+                        </div>
+                      </div>
+                      <div class="col-md mb-3">
+                        <div class="form-floating">
+                          <input id="lname" type="text" name="lastname" class="form-control form-control-lg"
+                            placeholder="Renter's Last Name" required>
+                          <label for="lname" class="form-label">Renter's Last Name*</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md mb-3">
+                        <div class="form-floating">
+                          <input id="email" type="email" name="email" class="form-control form-control-lg form-data"
+                            placeholder="Renter's Email" required>
+                          <label for="email" class="form-label">Renter's Email*</label>
+                        </div>
+                      </div>
+                      <div class="col-md mb-3">
+                        <div class="form-floating">
+                          <input id="phone" type="tel" name="phone" class="form-control form-control-lg form-data"
+                            placeholder="Renter's Cell Phone" required>
+                          <label for="phone" class="form-label">Renter's Phone*</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md mb-3">
+                        <div class="form-floating">
+                          <input id="street" type="text" name="street" class="form-control form-control-lg form-data"
+                            placeholder="Renter's Street Address" required>
+                          <label for="street" class="form-label">Renter's Street Address*</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md mb-3">
+                        <div class="form-floating">
+                          <input id="city" type="text" name="city" class="form-control form-control-lg form-data"
+                            placeholder="Renter's City" required>
+                          <label for="city" class="form-label">Renter's City*</label>
+                        </div>
+                      </div>
+                      <div class="col-md mb-3">
+                        <div class="form-floating">
+                          <input id="state" type="text" name="state" class="form-control form-control-lg form-data"
+                            placeholder="Renter's State" required>
+                          <label for="state" class="form-label">Renter's State*</label>
+                        </div>
+                      </div>
+                      <div class="col-md mb-3">
+                        <div class="form-floating">
+                          <input id="zip" type="text" name="zip" class="form-control form-control-lg form-data"
+                            placeholder="Renter's Zip" required>
+                          <label for="zip" class="form-label">Renter's Zip Code*</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-4">
+                      <div class="col">
+                        <label for="yourenter" class="form-label">Are you the Renter?*</label>
+                        <div class="form-check">
+                          <input type="radio" class="form-check-input" id="RenterYes" name="yourenter" value="Yes"
+                            onchange="EnableDisableTextBoxNextB('RenterYes')">
+                          <label class="form-check-label" for="RenterYes">Yes, I am the Renter.</label>
+                        </div>
+                        <div class="form-check">
+                          <input type="radio" class="form-check-input" id="RenterNo" name="yourenter" value="No"
+                            onchange="EnableDisableTextBoxNextB('RenterNo')" required>
+                          <label class="form-check-label" for="RenterNo">No, I am submitting this request on behalf of
+                            the Renter.</label>
+                          <div class="row">
+                            <div class="col-md mb-3">
+                              <div class="form-floating">
+                                <input class="form-control" type="text" name="contacterfirst" id="contacterfirst"
+                                  placeholder="Your Name if you are not the Renter" disabled="disabled">
+                                <label for="contacterfirst">Your First Name if you are not the Renter</label>
+                              </div>
+                            </div>
+                            <div class="col-md mb-3">
+                              <div class="form-floating">
+                                <input class="form-control" type="text" name="contacterlast" id="contacterlast"
+                                  placeholder="Your Last Name if you are not the Renter" disabled="disabled">
+                                <label for="contacterlast">Your Last Name if you are not the Renter</label>
+                              </div>
+                            </div>
+                            <div class="col-md mb-3">
+                              <div class="form-floating">
+                                <input class="form-control" type="email" name="contacteremail" id="contacteremail"
+                                  placeholder="Your Email if you are not the Renter" disabled="disabled">
+                                <label for="contacteremail">Your Email if you are not the Renter</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-4">
+                      <div class="col">
+                        <label for="conditions" class="form-label">Rental Conditions and Restrictions*<br>
+                          <div class="form-text strong">I accept the following mandatory rental conditions and
+                            restrictions:</div>
+                        </label>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" name="conditions" id="Type1"
+                            value="Conditions Accepted" required>
+                          <label class="form-check-label" for="Type1">The following events are prohibited: events open to
+                            the public; events charging admission; and events for attendees under age 23.</label>
+                          <div class="invalid-feedback">
+                            You must agree before submitting.
+                          </div>
+                        </div>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" name="conditions" id="Type2" required>
+                          <label class="form-check-label" for="Type2">The Renter must be at least 23 years old and is
+                            required to show ID at Check-in.</label>
+                          <div class="invalid-feedback">
+                            You must agree before submitting.
+                          </div>
+                        </div>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" name="conditions" id="Type3"
+                            value="The Renter must remain onsite for the duration of the rental and is financially and legally responsible for the actions of all attendees."
+                            required>
+                          <label class="form-check-label" for="Type3">The Renter must remain onsite for the duration of
+                            the rental and is financially and legally responsible for the actions of all
+                            attendees.</label>
+                          <div class="invalid-feedback">
+                            You must agree before submitting.
+                          </div>
+                        </div>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" name="conditions" id="Type4"
+                            value="The Venue has a maximum capacity of 48 people in total." required>
+                          <label class="form-check-label" for="Type4">The Venue has a maximum capacity of 48 people in
+                            total. </label>
+                          <div class="invalid-feedback">
+                            You must agree before submitting.
+                          </div>
+                        </div>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" name="conditions" id="Type5"
+                            value="The latest Check-out Time is 10:00pm." required>
+                          <label class="form-check-label" for="Type5">The latest Check-out Time is 10:00pm.</label>
+                          <div class="invalid-feedback">
+                            You must agree before submitting.
+                          </div>
+                        </div>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" name="conditions" id="Type6"
+                            value="Setup and breakdown time must fall within the six hour rental time period." required>
+                          <label class="form-check-label" for="Type6">Setup and breakdown time must fall within the six
+                            hour rental time period.</label>
+                          <div class="invalid-feedback">
+                            You must agree before submitting.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-4">
+                      <div class="col">
+                        <label for="type" class="form-label">Type of Event*<br>
+                          <div class="form-text">The following events are prohibited: events open to the public; events
+                            charging admission; and events for attendants under age 23.<br>
+                            <em class="strong">If you misrepresent your Event, it will be canceled and your fees
+                              forfeit.</em>
+                          </div>
+                        </label>
+                        <div class="form-check">
+                          <input type="radio" class="form-check-input" name="type" id="Baby" value="Baby Shower"
+                            onchange="EnableDisableTextBoxNext('Baby')" required>
+                          <label class="form-check-label" for="Baby">Baby Shower</label>
+                        </div>
+                        <div class="form-check">
+                          <input type="radio" class="form-check-input" name="type" id="Bridal" value="Bridal Shower"
+                            onchange="EnableDisableTextBoxNext('Bridal')" required>
+                          <label class="form-check-label" for="Bridal">Bridal Shower</label>
+                        </div>
+                        <div class="form-check">
+                          <input type="radio" class="form-check-input" name="type" id="Birthday" value="Birthday Party"
+                            onchange="EnableDisableTextBoxNext('Birthday')" required>
+                          <label class="form-check-label" for="Birthday">Birthday Party </label>
+                        </div>
+                        <div class="form-check">
+                          <input type="radio" class="form-check-input" name="type" id="Anniversary"
+                            onchange="EnableDisableTextBoxNext('Anniversary')" value="Anniversary Party" required>
+                          <label class="form-check-label" for="Anniversary">Anniversary Party </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input type="radio" class="form-check-input" name="type" id="Other"
+                            onchange="EnableDisableTextBoxNext('Other')" value="" required>
+                          <label class="form-check-label d-inline" for="Other">Other:</label>
+                          <div class="form-floating">
+                            <input class="form-control d-inline" type="text" name="type" id="otherType"
+                              onchange="addValueToRadioBtn();" placeholder="Your Event Type" disabled="disabled" required>
+                            <label for="type">Your Event Type</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-4">
+                      <div class="col">
+                        <div class="form-floating">
+                          <input id="title" type="text" name="title" class="form-control form-control-lg"
+                          placeholder="Event Title*" required aria-describedby="titleHelp">
+                         <label for="title" class="form-label">Event Title*</label>
+                          <div id="titleHelp" class="form-text">or Name(s) of Person(s) being honored by event, ex.
+                          "Laura's 40th Birthday"</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md mb-3">
+                        <div class="form-floating textBoxEventDate">
+                          <input type="text" id="eventdate" name="eventdate" class="form-control form-control-lg"
+                              data-val="true" required aria-describedby="dateHelp">
+                          <label for="eventdate" class="form-label">Rental Date*</label>
+                          <div id="dateHelp" class="form-text strong">Rentals on Fridays, Saturdays, and Sundays.
+                              Check calendar for availability.</div>
+                        </div>
+                      </div>
+                      <div class="col-md  mb-3">
+                        <div class="form-floating">
+                          <select id="checkin" name="checkin" class="form-select"
+                            aria-describedby="timeHelp" required>
+                            <option selected disabled value="">Choose Check-in Time</option>
+                            <option value="10:00:00">10:00am Sunday only</option>
+                            <option value="13:00:00">11:00am Sunday only</option>
+                            <option value="13:00:00">12:00pm Sunday only</option>
+                            <option value="13:00:00">1:00pm Saturday only</option>
+                            <option value="14:00:00">2:00pm Saturday only</option>
+                            <option value="15:00:00">3:00pm Saturday only</option>
+                            <option value="16:00:00">4:00pm Friday or Saturday</option>
+                          </select>
+                          <label for="checkin" class="form-label">Event Check-in Time*</label>
+                          <div id="timeHelp" class="form-text">$350 Friday Rentals Check-in at 4:00pm only<br>
+                            $400 Saturday Rentals offer a Check-in Time choice between 1:00pm and 4:00pm<br>
+                            $375 Sunday Rentals offer a Check-in Time choice between 10:00am and 12:00pm<br>
+                            If you would prefer a Check-in Time on the half hour please note it the Special Requests
+                            Section below.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-4">
+                      <div class="col">
+                        <div class="form-floating">
+                          <textarea id="questions" type="text" name="questions" class="form-control form-control-lg" style="height: 100px"></textarea>
+                          <label for="questions" class="form-label">Questions or Special Requests</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="control-group form-button-offset">
+                          <button class="btn btn-primary btn-lg" type="submit" name="submit">Submit Reservation
+                            Request</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="thanks" tabindex="-1" role="dialog" aria-labelledby="thanksModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="thanksModalLabel">Reservation Request Received</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                  <h2><i class="fa fa-envelope fa-3x"></i></h2>
+                  <h3><em>Thank you!</em></h3>
+                  <h4>We've received your Reservation Request and we will get back to you within two business days.</h4>
+                </div>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="mb-5 px-md-5 py-5">
+    <div class="container-xxl">
+      <div class="row">
+        <div class="section-head">
+          <h2>Venue Rental Agreement</h2>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col col-md-10 mx-auto">
+          <section id="agreement" class="well">
+            <div class="row">
+              <div class="col-md-7 pull-left"><img class="img-fluid" src="assets/img/venue-agreement-banner1.png"
+                  alt="1515 Kensington, LLC"></div>
+              <div class="col-md-5 pull-right text-right">
+                <h3>Private Party Venue Rental&nbsp;Agreement</h3>
+                <!--<img class="img-responsive" src="img/venue-agreement-banner12.png" alt="Venue Rental Agreement">-->
+              </div>
+            </div>
+            <p><strong>THIS VENUE RENTAL AGREEMENT</strong> ("<strong>Agreement</strong>") made by and between
+              <strong>1515 Kensington, LLC</strong> dba Complete Wellness Arts &amp; Science Center (hereafter referred
+              to as "<strong>Complete Wellness</strong>"), with an address of 1515 Kensington Ave., Buffalo, NY 14215
+              and the person named as the renter in the security deposit invoice (hereafter referred to as
+              "<strong>Renter</strong>") collectively, the "<strong>Parties</strong>."<br>
+              The Parties agree as follows:
+            <ol>
+              <li><strong>Venue Rental</strong><br>
+                Complete Wellness hereby grants a limited and revocable license ("<strong>License</strong>") to Renter
+                to use only the cooking classroom and adjoining event room ("<strong>Venue</strong>") in the Complete
+                Wellness Arts &amp; Science Center building located at 1515 Kensington Avenue, Buffalo, NY 14215
+                ("<strong>Premises</strong>") on the date(s) and during the hours specified under this Agreement. Use of
+                the cooking classroom includes right refrigerator, 14 counter-side chairs, and five tall 3' x 3' square
+                tables with 20 tall chairs. The event room includes 50 chairs and eight 5' or 6' banquet tables with
+                black tablecloths.</li>
+              <li><strong>Private Event</strong><br>
+                Renter shall hold only the approved private event ("<strong>Event</strong>") on the date
+                ("<strong>Rental Date</strong>"), between the times ("<strong>Check-in Time</strong>") and
+                ("<strong>Check-out Time</strong>") listed in the security deposit invoice. Renter is authorized to use
+                the Venue to hold the Event, and for no other purpose. Complete Wellness will revoke the License at any
+                time prior to, or during the Event if the applicant or Renter has been found to misrepresent the reason
+                for use or if he/she falsifies the reservation request form submission. Events open to the public,
+                events charging an admission fee, any type of fee, or conducting a "game of chance" (e.g., 50/50,
+                (un)organized gambling), and events for persons under age 23 are all prohibited. All guests shall be
+                issued a personal invitation, not to exceed 82 people, the maximum occupancy of the Venue.</li>
+              <li><strong>Advertising / Promotion Policy</strong><br>
+                The Renter, applicant, or anyone else is not permitted to advertise or promote an Event in the Venue to
+                the public. This includes promotion on any website, social networking site (e.g. Facebook, Twitter,
+                Instagram, LinkedIn, or Snapchat) or any other web-based information site (e.g. Craigslist) as well as
+                on any type of flyer, in any type of publication, on a billboard, roadside signs, at any type of school
+                or any public place. Complete Wellness reserves the right to revoke a License upon knowledge that an
+                internet-based promotional post or print advertisement has surfaced, even if, the person responsible for
+                the posting removes it prior to Complete Wellness notifying the Renter and/or applicant of such
+                activity. The Renter shall take full responsibility for the actions of their affiliates, guests or
+                anyone else that may make such posts on the internet. The Renter shall be responsible to pay the full
+                price of the scheduled rental and any attorney fees accrued by Complete Wellness regarding the
+                revocation of the License.</li>
+              <li><strong>Security Deposit</strong><br>
+                Renter agrees to pay a refundable security deposit of $100.00 (One Hundred Dollars)
+                ("<strong>Deposit</strong>") via an electronic invoice issued by email ("<strong>Deposit
+                  Invoice</strong>"). If the Deposit Invoice is not paid by the due date listed at the top of the
+                invoice the rental will be canceled. Complete Wellness shall have no obligations under this Agreement
+                until the Deposit Invoice is paid in full. Deposits are transferable to an alternate date based on
+                availability and a minimum of 6 weeks notice.<br>
+                Complete Wellness may retain all or a portion of Deposit or have a right to further damages exceeding
+                Deposit. The Deposit will be used by Complete Wellness to apply towards any costs and expenses incurred
+                by Complete Wellness for damage, breakage, cleaning, trash removal, and any other expenses incurred by
+                Complete Wellness as a result of Renter's use of Venue including but not limited to:
+                <ol type="a">
+                  <li>Significant cleaning above and beyond normal use (a minimum $25.00 fee will be applied for spills,
+                    carpet soiling, excess trash, clogged toilets, and may also include take-down of leftover
+                    decorations, signs, balloons, bows attached to the chairs, etc);</li>
+                  <li>The replacement of stained or damaged Event Room Carpet Tiles (a $25.00 fee for the first Carpet
+                    Tile and a $15.00 fee for each additional Carpet Tile requiring replacement will be assessed);</li>
+                  <li>If Renter is not checked in or out within 15 minutes of scheduled Check-in Time or Check-out Time
+                    (a $15.00 fee will apply for every 15 minute overage);</li>
+                  <li>Unsupervised guests causing false fire or security alarms (a minimum $25.00 fee will be applied
+                    for any false alarm);</li>
+                  <li>Damages, losses, or claims result from breaches of the hold harmless and indemnity agreement
+                    contained in this Agreement;</li>
+                  <li>And/or if Complete Wellness deems any action by the Renter and/or guests inappropriate or if any
+                    other violations of this Agreement occur. In the event of disturbances to the point of expulsion, no
+                    portion of the Rental Fee or Deposit will be refunded to Renter. </li>
+                </ol>
+                Complete Wellness will determine the amount to be refunded to Renter and the refund will be initiated
+                via PayPal back to original payment method within six business days of Event Date or when all accounts
+                are settled, whichever is later, if there has been no violation of the Agreement by Renter. An invoice
+                of the charges can be presented to the Renter if requested. Renter will be responsible for any balances
+                due to Complete Wellness, payable in five (5) days.
+              </li>
+              <li><strong>Rental Fee</strong><br>
+                In consideration for use of the Venue for the Event, Renter shall pay Complete Wellness the rental fee
+                sum listed in the Deposit Invoice ("<strong>Rental Fee</strong>"), payable in full 6 weeks before Rental
+                Date or the next business day if due date falls on a weekend or holiday as listed in the Deposit Invoice
+                ("<strong>Rental Fee Due Date</strong>"). If Renter fails to pay Rental Fee by Rental Fee Due Date,
+                Complete Wellness shall have the right to revoke License and to keep the full amount of the Deposit.
+              </li>
+              <li><strong>Liability</strong><br>
+                Renter will be liable for any physical damages, missing property, legal actions, and/or loss of
+                reputation or business opportunities that Complete Wellness may incur as a consequence of the actions of
+                Renter or any of Renter's guests while Renter is in control of Venue. Further, Renter shall be
+                responsible for trespassers or uninvited third parties during Event. Renter hereby agrees to be fully
+                and solely responsible for any damage and costs exceeding the Security Deposit in any way relating to
+                the Event and to reimburse Complete Wellness for such loss payable within 5 days upon the presentation
+                of a bill for said damage and/or loss.</li>
+              <li><strong>Cleaning</strong><br>
+                Renter is responsible for maintaining the Venue and adjacent areas in as good clean condition as that in
+                which they were immediately prior to Renter's use except for typical light cleaning. Renter will be
+                responsible for bagging and disposing of all garbage in the dumpster including garbage from guests in
+                hallways and parking lot. Renter shall remove all personal property belonging to Renter or its invitees
+                at the end of Event. Complete Wellness and their agents are not responsible for any items brought to the
+                facility. Renter hereby agrees to accept the property in its present state of cleanliness.</li>
+              <li><strong>Disclaimers</strong><br>
+                Venue shall be provided by Complete Wellness as-is and Complete Wellness makes no warranty regarding the
+                suitability of Venue for Renter's intended use. Any amenities or supplies listed as available for
+                Renter's use is not to be construed as promised nor quantities guaranteed. Complete Wellness will make
+                every effort to provided listed amenities or supplies but does not guarantee delivery, condition or
+                quantity.</li>
+              <li><strong>Non-assignment of Rental Agreement</strong><br>
+                Renter agrees neither to assign this Agreement nor to permit persons other than those associated with
+                Renter's Event access to Venue as well as all other space located within Premises.</li>
+              <li><strong>Compliance with Laws</strong><br>
+                Renter shall obtain and maintain any necessary permits, licenses, or other forms of permission necessary
+                to use Venue according to the permitted uses set forth in a lawful manner. Renter shall not use Venue in
+                any manner that would violate any established local, state, or federal laws.</li>
+              <li><strong>Alcohol and Smoking</strong><br>
+                Alcoholic beverages may be consumed without a permit when there is no monetary exchange for the beverage
+                <strong><u>and</u></strong> when there is no admission charge for the event.<br>
+                In the case of monetary exchange for alcohol, a licensed caterer is required. Necessary licenses to
+                serve or sell alcohol are required. Any group who sells alcohol, or charges an admission fee and serves
+                alcohol, must obtain a temporary liquor license from the New York State Liquor Authority. A copy of the
+                license must be on file with Complete Wellness, ten business days prior to Event Date.<br>
+                When alcohol consumption is allowed during Event, alcohol may not be served to minors or anyone
+                appearing to be intoxicated. Renter agrees to assume all responsibility for ensuring that no one
+                underage is served alcohol and that all guests 21 years of age and older who are served alcohol drink
+                responsibly. Smoking is not allowed inside Premises. Cigarette disposal containers are available
+                outside.</li>
+              <li><strong>Right of Entry</strong><br>
+                Complete Wellness shall have the right to access Venue for purposes of, but not exclusive of, repair,
+                inspection of Premises, complaints from neighbors, etc.</li>
+              <li><strong>Indemnification</strong><br>
+                Renter agrees to hold Complete Wellness harmless and to indemnify Complete Wellness from any liability
+                by reason of personal injury to any person and for property damage occurring on or about or connected
+                with Premises or resulting from Renter's use thereof, including any acts or omissions on the part of
+                Renter, its employees, officers, directors, independent contractors, or other agents. Renter shall
+                notify Complete Wellness of any damage or injury of which it has knowledge in, to, or near Premises,
+                regardless of the cause of such damage or injury. Renter hereby acknowledges this and agrees to make no
+                such claims for any losses or damages against Complete Wellness.</li>
+              <li><strong>Revocation</strong><br>
+                Complete Wellness shall have the right to revoke the License at any time, provided it gives Renter
+                notice of revocation either to the email submitted by Renter or if outside business hours with a call to
+                the phone number submitted by Renter. In the event that Complete Wellness revokes License prior to Event
+                for reasons other than nonpayment of fees or breach of this Agreement by Renter, Complete Wellness shall
+                refund to Renter the full Deposit and Rental Fee, if paid. If Renter shall at any time be in default
+                under the terms of this Agreement, Complete Wellness shall have the right to terminate this Agreement
+                forthwith, whereupon Renter shall vacate the Premises immediately, and Renter shall have no right to
+                receive any refund of any Deposit or Rental Fee hereunder.</li>
+              <li><strong>Cancellation</strong><br>
+                Renter must cancel their reservation by emailing info@CompleteWellnessWNY.com before the Rental Fee Due
+                Date to receive a refund of all sums paid. If the reservation is canceled on or after the Rental Fee Due
+                Date the Renter shall receive a refund of the Deposit, however, the Rental Fee, if paid, will not be
+                eligible for a refund. If the Rental Fee has not been paid by the Rental Fee Due Date the Security
+                Deposit will not be eligible for a refund. Renter recognizes that the foregoing cancellation policy is
+                not intended to be punitive, but, reflect Complete Wellness foregoing actual or potential business
+                opportunities in reserving Venue for Renter and diminished ability to rent Venue within 6 weeks or less.
+              </li>
+              <li><strong>Force Majeure</strong><br>
+                In the event that Complete Wellness is unable, for reasons beyond its control, to make Venue available
+                to the Renter on the Event Date for the purposes as set forth in this Agreement, the Renter shall have
+                the option of choosing an alternate date to hold the Event based on availability (the "Alternate Event
+                Date"), at no extra charge to the Renter. The Alternate Event Date shall replace the Event Date for the
+                purposes of this Agreement, and all obligations, rights, duties, and privileges as set forth in this
+                Agreement shall remain binding on the Parties. If the Parties cannot agree upon an Alternate Event Date,
+                then Complete Wellness shall refund to Renter the full amount of the Rental Fee and Deposit. In neither
+                case shall Complete Wellness be liable for any additional costs or damages suffered by Renter (over and
+                above the Rental Fee and Deposit) arising out of a rescheduling or cancellation of the Event pursuant to
+                this section.</li>
+              <li><strong>Jurisdiction and Severability</strong><br>
+                The Parties agree to jurisdiction, for all matters related to this Agreement, in the State of New York
+                and further agree that the laws of the State of New York shall govern enforcement of its terms. The
+                Parties further agree that if any part of this Agreement is deemed invalid and unenforceable, all other
+                provisions hereunder shall remain in full force and effect. In the event that Complete Wellness must
+                seek legal remedies to complete execution of this Agreement, Renter agrees to pay all reasonable
+                attorney fees.</li>
+              <li><strong>Entire Agreement</strong><br>
+                This Agreement constitutes the entire agreement between the Parties, and supersedes any prior
+                understanding or representation of any kind preceding the date of this Agreement. There are no other
+                promises, conditions, understandings or other agreements, whether oral or written, relating to the
+                subject matter of this Agreement.</li>
+              <li><strong>Instructions and Regulations</strong><br>
+                Failure to comply with any of the following may result in partial or complete forfeiture of the Deposit
+                and/or additional fees to be billed.
+                <ol type="a">
+                  <li>License is restricted to Venue only. Guests are strictly prohibited from loitering in areas
+                    outside of Venue, including hallways and parking lot.</li>
+                  <li>Premises is located within a residential area and Complete Wellness strives to be a good neighbor.
+                    Renter is responsible for the conduct of all guests. Conduct deemed disorderly at the sole
+                    discretion of Complete Wellness shall be grounds for immediate expulsion from the Premises and
+                    conclusion of the rental period. In such cases no refund of the Rental Fee or Deposit shall be made.
+                  </li>
+                  <li>Renter must be at least 23 years of age and must be present during the event. Renter must ensure
+                    adequate supervision of minors with a minimum of two adults over age 23 for every minor under age
+                    18.</li>
+                  <li>Renter is responsible for moving equipment, tables, and chairs and must return them to original
+                    locations before checking out, however, used chairs must not be stacked and tables should be left
+                    standing.</li>
+                  <li>Glitter, Confetti, or any kind of Powder/Smoke is prohibited and use will result in cleaning fees.
+                    Candles must be completely enclosed in a glass or non-flammable holder.</li>
+                  <li>The use of tape, staples, nails, and push pins on Premises walls is prohibited and will result in
+                    damage fees to be assessed at the sole discretion of Complete Wellness. Removable putty will be
+                    provided at Check-in Time if needed to hang decorations on walls. Nothing can be hung from ceilings.
+                    Putty must be removed from walls and returned at check-out.</li>
+                  <li>Renter may use Right Fridge. The Left Fridge is only for tenant/employee use. No other appliances
+                    or utensils may be used. Renter must bring serving utensils, paper plates and plasticware if needed.
+                  </li>
+                  <li>No stovetop or oven use is allowed. Use of either will result in cleaning fees.</li>
+                  <li>Renter is responsible for cleaning any spills. Cleaners can be found in under sink cabinets in
+                    Kitchen and Event Room. Renter must notify Complete Wellness agent at check-out if any spills occur.
+                  </li>
+                  <li>All garbage must be bagged and disposed of in the dumpster including garbage from guests in
+                    hallways and parking lot. Extra garbage bags will be provided. Balloons must be deflated when thrown
+                    out.</li>
+                  <li>Renter must check out with Complete Wellness agent by Check-out Time. Music is prohibited after
+                    Check-out Time and Complete Wellness will shut off power in the event of noncompliance. The entire
+                    Deposit will be forfeit if Premises is not completely vacated an hour after scheduled Check-out
+                    Time.</li>
+                </ol>
+              </li>
+            </ol>
+            By paying the Deposit iInvoice or Rental Fee, Renter agrees to the terms set out in this complete Agreement.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Content Ends -->
+
+  <!--footer-->
+  <footer class="container">
+    <div class="row text-center">
+      <div class="col-sm-4">
+        <h3>Address</h3>
+        <hr>
+        <address class="lead"><a
+            href="https://maps.google.com/maps?ll=42.931847,-78.838885&z=14&t=m&hl=en-US&gl=US&mapclient=embed&cid=8380851504647831885"
+            target="_blank">
+            1515 Kensington Ave.<br>
+            Buffalo, NY 14215</a>
+        </address>
+      </div>
+      <div class="col-sm-4">
+        <h3>Phone &amp; Email</h3>
+        <hr>
+        <p class="lead"><a href="tel:716-253-6548"><i></i>&nbsp;&nbsp;&nbsp;716.253.6548</a><br>
+          <a href="mailto:info@completewellnesswny.com"><i></i>&nbsp;&nbsp;&nbsp;info@CompleteWellnessWNY.com</a>
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <h3>Follow us</h3>
+        <hr>
+        <p class="lead">
+          <a href="http://facebook.com/CompleteWellnessWNY/" target="_blank"><i
+              class="fa fa-facebook-official fa-lg"></i></a>&nbsp;
+          <a href="https://www.instagram.com/completewellnesswny/" rel="publisher" target="_blank"><i
+              class="fa fa-instagram fa-lg"></i></a>&nbsp;
+          <a href="https://g.page/CompleteWellnessWNY?gm" rel="publisher" target="_blank"><i
+              class="fa fa-google fa-lg"></i></a>&nbsp;
+          <a href="https://www.linkedin.com/company/complete-wellness-arts-&-science-center" target="_blank"><i
+              class="fa fa-linkedin fa-lg"></i></a>
+          <a data-toggle="modal" href="#signUp" class="btn btn-lg btn-link"><i class="fa fa-envelope fa-lg"
+              aria-hidden="true"></i>&nbsp;Subscribe</a>
+        </p>
+        <div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-labelledby="signUpLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="signUpLabel">Subscribe to our mailing list</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="mc_embed_signup">
+                  <form
+                    action="http://healthessentialshbot.us4.list-manage.com/subscribe/post?u=f47fd451d005d21f24fb6fd61&amp;id=e1c366e1a2"
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
+                    class="form-inline validate" role="form" novalidate>
+                    <div class="input-group mb-5">
+                      <input type="email" class="form-control" value="" name="EMAIL" placeholder="Email Address"
+                        id="mce-EMAIL" aria-label="Email Address" aria-describedby="mc-embedded-subscribe" required>
+                      <button class="btn btn-primary" type="submit" value="Subscribe" name="subscribe"
+                        id="mc-embedded-subscribe">Sign Up</button>
+                    </div>
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+      </div>
+    </div>
+    <div id="footer-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <p class="text-center">©2022 Complete Wellness Arts &amp; Science Center &nbsp; &nbsp;|&nbsp; &nbsp;
+              Designed&nbsp;by&nbsp;L.&nbsp;Villalobos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!--/footer-->
+
+  <!-- END PAGE -->
+
+  <script src="assets/js/cw.js"></script>
+  <script src="assets/js/helpers.js"></script>
+
+  <script>//Form fields disable,enable
+    function EnableDisableTextBoxNext(opt) {
+      if (opt == "Other") {
+        document.getElementById("otherType").disabled = false;
+      }
+      else {
+        document.getElementById("otherType").disabled = true;
+      }
+    }
+    function addValueToRadioBtn() {
+      if (document.getElementById("Other").checked == true) {
+        document.getElementById("Other").value = document.getElementById("otherType").value;
+      }
+      //added an alert box just to test that the value has been updated
+      //alert(document.getElementById("Other").value);
+    }
+
+    function EnableDisableTextBoxNextB(opt) {
+      if (opt == "RenterNo") {
+        document.getElementById("contacterfirst").disabled = false;
+        document.getElementById("contacterlast").disabled = false;
+        document.getElementById("contacteremail").disabled = false;
+      }
+      else {
+        document.getElementById("contacterfirst").disabled = true;
+        document.getElementById("contacterlast").disabled = true;
+        document.getElementById("contacteremail").disabled = true;
+      }
+    }
+
+    //        function renterInfo() {
+    //            var input = document.getElementsByClassName('renter-info');
+    //            for (var i = 0; i < input.length; i++) {
+    //                input[i].disabled = false;
+    //            }
+    //        }
+  </script>
+  <script>
+    // for validating the forms
+    (function () {
+      'use strict';
+      window.addEventListener(
+        'load', function () {
+          var formObject = $('#contact-form');
+          var form = formObject[0];
+          if (form != undefined) {
+            form.addEventListener(
+              'submit',
+              function (event) {
+                var submitBtn = $('button[name="submit"]')[0];
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Submitting request...';
+
+                if (form.checkValidity() === false) {
+                  submitBtn.disabled = false;
+                  submitBtn.innerHTML = 'Fix Entries Above and Resubmit Request';
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                else {
+
+                  var url = 'https://script.google.com/macros/s/AKfycbx085okt6qZpTa3YSpTZSdMEuDZyBycDvDxsm9GL7WpNdla2DeYg1sDp4Sp9Kxyazk/exec';
+                  var xhr = $.ajax({
+                    url: url,
+                    method: 'POST',
+                    dataType: 'json',
+                    data: formObject.serialize(),
+                    success: function (data) {
+                      submitBtn.disabled = false;
+                      submitBtn.innerHTML = 'Submit Reservation Request';
+                      $('#fullCalModal').modal('hide');
+                      $('#thanks').modal('show');
+                    },
+                    error: function (data) {
+                      submitBtn.disabled = false;
+                      submitBtn.innerHTML = 'Resubmit Request';
+                      $('#failed').modal('show');
+                    },
+                  });
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+              },
+              false
+            );
+          }
+        },
+        false
+      );
+    })();
+  </script>
   </body>
 </html>

@@ -1,0 +1,8 @@
+@font-face {
+	font-family: 'ImparaBol';
+	src: url('ImparaBol-webfont.eot');
+	src: url('ImparaBol-webfont.eot?#iefix') format('embedded-opentype'),
+		url('ImparaBol-webfont.woff') format('woff'),
+		url('ImparaBol-webfont.ttf') format('truetype'),
+		url('ImparaBol-webfont.svg') format('svg');
+}
